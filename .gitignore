@@ -1,4 +1,7 @@
-/.venv
-/.idea
-/db.sqlite3
+# All directories
 __pycache__
+
+# Specific paths
+/.idea
+/.venv
+/db.sqlite3
