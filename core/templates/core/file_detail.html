@@ -3,7 +3,32 @@
 {% block main %}
     <h1>{{ file.name }}</h1>
 
-    <p>
-        {{ file.content }}
-    </p>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Label</th>
+                <th>Timecode</th>
+                <th>Source</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>
+                    {{ entity.name }}
+                </td>
+                <td>
+                    {{ entity.label }}
+                </td>
+                <td>
+                    {{ entity.timecode }}
+                </td>
+                <td>
+                    {{ entity.segment }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

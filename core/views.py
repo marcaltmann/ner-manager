@@ -1,6 +1,7 @@
 import json
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.urls import reverse
 
 from core.forms import UploadFileForm
 from core.models import InputFile, NamedEntity
@@ -10,19 +11,17 @@ import time
 import spacy
 
 
-def do_ner(input_file: InputFile, transcript: dict):
+def do_ner(input_file: InputFile, transcript: list):
     nlp = spacy.load("de_core_news_lg")
 
-    with open('test.json') as f:
-        data = json.load(f)
-
-    for segment in data:
+    for segment in transcript:
         doc = nlp(segment['text'])
         for ent in doc.ents:
             entity = NamedEntity(
                 label=ent.label_,
                 name=ent.text,
                 timecode=segment['start'],
+                segment=segment['text'],
                 input_file=input_file,
             )
             entity.save()
@@ -42,7 +41,8 @@ def upload(request):
             input_file = InputFile(name=file.name)
             input_file.save()
             do_ner(input_file, content)
-            return HttpResponseRedirect('/')
+            path = reverse('file_detail', args=[input_file.id])
+            return HttpResponseRedirect(path)
         else:
             return HttpResponseRedirect('/')
     else:
@@ -59,5 +59,8 @@ def file_index(request):
 
 def file_detail(request, pk):
     input_file = get_object_or_404(InputFile, pk=pk)
-    context = {"file": input_file}
+    context = {
+        "file": input_file,
+        "entities": input_file.namedentity_set.order_by("name", "timecode"),
+    }
     return render(request, "core/file_detail.html", context)
