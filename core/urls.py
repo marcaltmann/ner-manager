@@ -5,4 +5,6 @@ from core import views
 urlpatterns = [
     path('', views.index, name='index'),
     path('upload/', views.upload, name='upload'),
+    path('files/', views.file_index, name="file_index"),
+    path('files/<int:pk>/', views.file_detail, name='file_detail'),
 ]
