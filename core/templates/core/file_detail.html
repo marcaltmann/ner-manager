@@ -22,8 +22,7 @@
         <thead>
             <tr>
                 <th>Actions</th>
-                <th>Name</th>
-                <th>Label</th>
+                <th>Named entity</th>
                 <th>Timecode</th>
                 <th>Source</th>
             </tr>
@@ -41,15 +40,8 @@
                     <form method="POST" action="{% url 'entity_update' entity.id %}"
                           class="form form--inline">
                         {% csrf_token %}
-                        <input name="name" value="{{ entity.name }}">
-                        <button type="submit" aria-label="Submit">S</button>
-                    </form>
-                </td>
-                <td>
-                    <form method="POST" action="{% url 'entity_update' entity.id %}"
-                          class="form form--inline">
-                        {% csrf_token %}
-                        <input name="label" value="{{ entity.label }}">
+                        <input name="name" aria-label="Name" value="{{ entity.name }}">
+                        <input name="label" aria-label="Label" value="{{ entity.label }}">
                         <button type="submit" aria-label="Submit">S</button>
                     </form>
                 </td>
