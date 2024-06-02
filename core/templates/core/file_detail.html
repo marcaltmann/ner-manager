@@ -17,16 +17,22 @@
     <table>
         <thead>
             <tr>
+                <th>Actions</th>
                 <th>Name</th>
                 <th>Label</th>
                 <th>Timecode</th>
                 <th>Source</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
+                <td>
+                    <form method="POST" action="{% url 'entity_delete' entity.id %}">
+                        {% csrf_token %}
+                        <button type="submit" aria-label="Delete">x</button>
+                    </form>
+                </td>
                 <td>
                     {{ entity.name }}
                 </td>
@@ -38,9 +44,6 @@
                 </td>
                 <td>
                     {{ entity.segment }}
-                </td>
-                <td>
-                    <button aria-label="Delete">x</button>
                 </td>
             </tr>
         {% endfor %}

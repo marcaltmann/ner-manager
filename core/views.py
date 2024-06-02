@@ -74,3 +74,11 @@ def file_delete(request, pk):
     input_file.delete()
     path = reverse('file_index')
     return HttpResponseRedirect(path)
+
+
+def entity_delete(request, pk):
+    entity = get_object_or_404(NamedEntity, pk=pk)
+    file_id = entity.input_file.id
+    entity.delete()
+    path = reverse('file_detail', args=[file_id])
+    return HttpResponseRedirect(path)
