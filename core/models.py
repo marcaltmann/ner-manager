@@ -21,7 +21,7 @@ class NamedEntity(models.Model):
     def __str__(self):
         return self.name
 
-    def time(self):
+    def formatted_timecode(self):
         result = timedelta(seconds=float(self.timecode))
         result = (datetime.datetime.min + result).time()
         return result
