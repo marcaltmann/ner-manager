@@ -38,7 +38,10 @@ def entities_as_json(input_file: InputFile) -> str:
             entity_dict[entity.label][entity.name] = list()
         tc = float(entity.timecode)
         entity_dict[entity.label][entity.name].append(tc)
-    entity_json = json.dumps(entity_dict, indent=4, ensure_ascii=False)
+    entity_json = json.dumps(entity_dict,
+                             indent=4,
+                             ensure_ascii=False,
+                             sort_keys=True)
     return entity_json
 
 
