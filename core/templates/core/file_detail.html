@@ -3,6 +3,17 @@
 {% block main %}
     <h1>{{ file.name }}</h1>
 
+    <p>
+        {{ entities|length }} named entities
+    </p>
+
+    <form method="POST" action="{% url 'file_delete' file.id %}">
+        {% csrf_token %}
+        <p>
+            <button type="submit">Delete this upload</button>
+        </p>
+    </form>
+
     <table>
         <thead>
             <tr>

@@ -67,3 +67,10 @@ def file_detail(request, pk):
         "entities": input_file.namedentity_set.order_by("name", "timecode"),
     }
     return render(request, "core/file_detail.html", context)
+
+
+def file_delete(request, pk):
+    input_file = get_object_or_404(InputFile, pk=pk)
+    input_file.delete()
+    path = reverse('file_index')
+    return HttpResponseRedirect(path)
