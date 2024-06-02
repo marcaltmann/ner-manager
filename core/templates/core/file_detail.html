@@ -38,10 +38,20 @@
                     </form>
                 </td>
                 <td>
-                    {{ entity.name }}
+                    <form method="POST" action="{% url 'entity_update' entity.id %}"
+                          class="form form--inline">
+                        {% csrf_token %}
+                        <input name="name" value="{{ entity.name }}">
+                        <button type="submit" aria-label="Submit">S</button>
+                    </form>
                 </td>
                 <td>
-                    {{ entity.label }}
+                    <form method="POST" action="{% url 'entity_update' entity.id %}"
+                          class="form form--inline">
+                        {% csrf_token %}
+                        <input name="label" value="{{ entity.label }}">
+                        <button type="submit" aria-label="Submit">S</button>
+                    </form>
                 </td>
                 <td>
                     {{ entity.timecode }}

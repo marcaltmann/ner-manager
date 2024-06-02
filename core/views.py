@@ -100,7 +100,19 @@ def file_delete(request, pk):
 
 def entity_delete(request, pk):
     entity = get_object_or_404(NamedEntity, pk=pk)
-    file_id = entity.input_file.id
+    file_id = entity.input_file_id
     entity.delete()
+    path = reverse('file_detail', args=[file_id])
+    return HttpResponseRedirect(path)
+
+
+def entity_update(request, pk):
+    entity = get_object_or_404(NamedEntity, pk=pk)
+    if 'name' in request.POST:
+        entity.name = request.POST['name']
+    if 'label' in request.POST:
+        entity.label = request.POST['label']
+    entity.save()
+    file_id = entity.input_file_id
     path = reverse('file_detail', args=[file_id])
     return HttpResponseRedirect(path)

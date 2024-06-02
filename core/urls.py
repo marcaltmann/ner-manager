@@ -10,4 +10,5 @@ urlpatterns = [
     path('files/<int:pk>/download/', views.file_download, name='file_download'),
     path('files/<int:pk>/delete/', views.file_delete, name='file_delete'),
     path('entities/<int:pk>/delete/', views.entity_delete, name='entity_delete'),
+    path('entities/<int:pk>/update/', views.entity_update, name='entity_update'),
 ]
