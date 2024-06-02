@@ -14,6 +14,7 @@ import spacy
 def do_ner(input_file: InputFile, transcript: list):
     nlp = spacy.load("de_core_news_lg")
 
+    entities = list()
     for segment in transcript:
         doc = nlp(segment['text'])
         for ent in doc.ents:
@@ -24,7 +25,9 @@ def do_ner(input_file: InputFile, transcript: list):
                 segment=segment['text'],
                 input_file=input_file,
             )
-            entity.save()
+            entities.append(entity)
+
+    NamedEntity.objects.bulk_create(entities)
 
 
 def index(request):
