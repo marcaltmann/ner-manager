@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>NER manager</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>NER manager</title>
+      <style>
+          thead > tr {
+              background-color: lightblue;
+          }
+          tbody > tr:nth-child(even) {
+              background-color: lightgray;
+          }
+      </style>
   </head>
 
   <body>
-  {% block main %}
-  {% endblock %}
+      {% block main %}
+      {% endblock %}
   </body>
 </html>

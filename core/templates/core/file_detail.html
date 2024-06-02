@@ -10,6 +10,7 @@
                 <th>Label</th>
                 <th>Timecode</th>
                 <th>Source</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,9 @@
                 </td>
                 <td>
                     {{ entity.segment }}
+                </td>
+                <td>
+                    <button aria-label="Delete">x</button>
                 </td>
             </tr>
         {% endfor %}

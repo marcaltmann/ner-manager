@@ -10,10 +10,10 @@ import json
 import time
 import spacy
 
+nlp = spacy.load("de_core_news_lg")
+
 
 def do_ner(input_file: InputFile, transcript: list):
-    nlp = spacy.load("de_core_news_lg")
-
     entities = list()
     for segment in transcript:
         doc = nlp(segment['text'])
