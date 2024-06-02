@@ -1,3 +1,5 @@
+import datetime
+from datetime import time, timedelta
 from django.db import models
 
 
@@ -18,3 +20,8 @@ class NamedEntity(models.Model):
 
     def __str__(self):
         return self.name
+
+    def time(self):
+        result = timedelta(seconds=float(self.timecode))
+        result = (datetime.datetime.min + result).time()
+        return result
