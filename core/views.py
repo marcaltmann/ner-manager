@@ -1,19 +1,17 @@
 import json
-from django.http import HttpResponseRedirect, JsonResponse
+import spacy
+from pathlib import Path
+from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render, get_list_or_404, get_object_or_404
 from django.urls import reverse
 
 from core.forms import UploadFileForm
 from core.models import InputFile, NamedEntity
 
-import json
-import time
-import spacy
-
 nlp = spacy.load("de_core_news_lg")
 
 
-def do_ner(input_file: InputFile, transcript: list):
+def do_ner(input_file: InputFile, transcript: list) -> None:
     entities = list()
     for segment in transcript:
         doc = nlp(segment['text'])
@@ -28,6 +26,20 @@ def do_ner(input_file: InputFile, transcript: list):
             entities.append(entity)
 
     NamedEntity.objects.bulk_create(entities)
+
+
+def entities_as_json(input_file: InputFile) -> str:
+    entity_dict = dict()
+    entities = input_file.namedentity_set.all()
+    for entity in entities:
+        if entity.label not in entity_dict:
+            entity_dict[entity.label] = dict()
+        if entity.name not in entity_dict[entity.label]:
+            entity_dict[entity.label][entity.name] = list()
+        tc = float(entity.timecode)
+        entity_dict[entity.label][entity.name].append(tc)
+    entity_json = json.dumps(entity_dict, indent=4, ensure_ascii=False)
+    return entity_json
 
 
 def index(request):
@@ -55,8 +67,8 @@ def upload(request):
 
 
 def file_index(request):
-    list = get_list_or_404(InputFile)
-    context = {"list": list}
+    file_list = get_list_or_404(InputFile)
+    context = {"list": file_list}
     return render(request, "core/file_index.html", context)
 
 
@@ -67,6 +79,16 @@ def file_detail(request, pk):
         "entities": input_file.namedentity_set.order_by("name", "timecode"),
     }
     return render(request, "core/file_detail.html", context)
+
+
+def file_download(request, pk):
+    input_file = get_object_or_404(InputFile, pk=pk)
+    json_str = entities_as_json(input_file)
+    response = HttpResponse(json_str, content_type="application/json")
+    filename_stem = Path(input_file.name).stem
+    filename = f"{filename_stem}_ner.json"
+    response["Content-Disposition"] = f'attachment; filename="{filename}"'
+    return response
 
 
 def file_delete(request, pk):

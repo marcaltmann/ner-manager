@@ -5,6 +5,10 @@
 
     <p>
         {{ entities|length }} named entities
+        |
+        <a href="{% url 'file_download' file.id %}">
+            Export as JSON file
+        </a>
     </p>
 
     <form method="POST" action="{% url 'file_delete' file.id %}">
