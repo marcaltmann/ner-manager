@@ -3,11 +3,18 @@
 {% block main %}
     <h1>Uploaded files</h1>
 
-    <ul>
-    {% for file in list %}
-        <li>
-            <a href="{% url 'file_detail' file.id %}">{{ file.name }}</a>
-        </li>
-    {% endfor %}
-    </ul>
-{% endblock %}
+    {% if list %}
+        <ul>
+        {% for file in list %}
+            <li>
+                <a href="{% url 'file_detail' file.id %}">{{ file.name }}</a>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>
+            There are no uploaded files yet.
+            Please <a href="{% url 'upload' %}">upload files</a> first.
+        </p>
+    {% endif %}
+{% endblock main %}

@@ -70,7 +70,7 @@ def upload(request):
 
 
 def file_index(request):
-    file_list = get_list_or_404(InputFile)
+    file_list = InputFile.objects.all()
     context = {"list": file_list}
     return render(request, "core/file_index.html", context)
 
