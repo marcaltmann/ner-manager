@@ -8,19 +8,22 @@ from django.urls import reverse
 from core.forms import UploadFileForm
 from core.models import InputFile, NamedEntity
 
-nlp = spacy.load("de_core_news_lg")
+# model = "en_core_web_lg"
+model = "de_core_news_lg"
+# model = "fr_core_news_lg"
+nlp = spacy.load(model)
 
 
 def do_ner(input_file: InputFile, transcript: list) -> None:
     entities = list()
     for segment in transcript:
-        doc = nlp(segment['text'])
+        doc = nlp(segment["text"])
         for ent in doc.ents:
             entity = NamedEntity(
                 label=ent.label_,
                 name=ent.text,
-                timecode=segment['start'],
-                segment=segment['text'],
+                timecode=segment["start"],
+                segment=segment["text"],
                 input_file=input_file,
             )
             entities.append(entity)
@@ -38,10 +41,7 @@ def entities_as_json(input_file: InputFile) -> str:
             entity_dict[entity.label][entity.name] = list()
         tc = float(entity.timecode)
         entity_dict[entity.label][entity.name].append(tc)
-    entity_json = json.dumps(entity_dict,
-                             indent=4,
-                             ensure_ascii=False,
-                             sort_keys=True)
+    entity_json = json.dumps(entity_dict, indent=4, ensure_ascii=False, sort_keys=True)
     return entity_json
 
 
@@ -53,16 +53,16 @@ def upload(request):
     if request.method == "POST":
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            file = request.FILES['file']
+            file = request.FILES["file"]
             content_str = file.read()
             content = json.loads(content_str)
             input_file = InputFile(name=file.name)
             input_file.save()
             do_ner(input_file, content)
-            path = reverse('file_detail', args=[input_file.id])
+            path = reverse("file_detail", args=[input_file.id])
             return HttpResponseRedirect(path)
         else:
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect("/")
     else:
         form = UploadFileForm()
         context = {"form": form}
@@ -97,7 +97,7 @@ def file_download(request, pk):
 def file_delete(request, pk):
     input_file = get_object_or_404(InputFile, pk=pk)
     input_file.delete()
-    path = reverse('file_index')
+    path = reverse("file_index")
     return HttpResponseRedirect(path)
 
 
@@ -105,17 +105,17 @@ def entity_delete(request, pk):
     entity = get_object_or_404(NamedEntity, pk=pk)
     file_id = entity.input_file_id
     entity.delete()
-    path = reverse('file_detail', args=[file_id])
+    path = reverse("file_detail", args=[file_id])
     return HttpResponseRedirect(path)
 
 
 def entity_update(request, pk):
     entity = get_object_or_404(NamedEntity, pk=pk)
-    if 'name' in request.POST:
-        entity.name = request.POST['name']
-    if 'label' in request.POST:
-        entity.label = request.POST['label']
+    if "name" in request.POST:
+        entity.name = request.POST["name"]
+    if "label" in request.POST:
+        entity.label = request.POST["label"]
     entity.save()
     file_id = entity.input_file_id
-    path = reverse('file_detail', args=[file_id])
+    path = reverse("file_detail", args=[file_id])
     return HttpResponseRedirect(path)

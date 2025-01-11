@@ -7,14 +7,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0004_remove_inputfile_content'),
+        ("core", "0004_remove_inputfile_content"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='namedentity',
-            name='input_file',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='core.inputfile'),
+            model_name="namedentity",
+            name="input_file",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="core.inputfile",
+            ),
             preserve_default=False,
         ),
     ]

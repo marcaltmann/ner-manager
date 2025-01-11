@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0005_namedentity_input_file'),
+        ("core", "0005_namedentity_input_file"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='namedentity',
-            name='timecode',
+            model_name="namedentity",
+            name="timecode",
         ),
         migrations.AddField(
-            model_name='namedentity',
-            name='segment',
-            field=models.TextField(default=''),
+            model_name="namedentity",
+            name="segment",
+            field=models.TextField(default=""),
             preserve_default=False,
         ),
     ]
