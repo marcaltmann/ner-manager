@@ -11,35 +11,25 @@
         </a>
     </p>
 
-    <form method="POST" action="{% url 'file_delete' file.id %}">
+    <form method="POST" action="">
         {% csrf_token %}
-        <p>
-            <button type="submit">Delete this upload</button>
-        </p>
-    </form>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Actions</th>
-                <th>Named entity</th>
-                <th>Timecode</th>
-                <th>Source</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>
-                    <form method="POST" action="{% url 'entity_delete' entity.id %}">
-                        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Actions</th>
+                    <th>Named entity</th>
+                    <th>Timecode</th>
+                    <th>Source</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>
                         <input type="checkbox" name="action" >
-                    </form>
-                </td>
-                <td>
-                    <form method="POST" action="{% url 'entity_update' entity.id %}"
-                          class="form form--inline">
-                        {% csrf_token %}
+                    </td>
+                    <td class="u-flex">
                         <input name="name" aria-label="Name" value="{{ entity.name }}">
                         <select name="label" aria-label="Label">
                             <option value="PER"{% if entity.name == "PER" %} selected{% endif %}>
@@ -55,16 +45,28 @@
                                 Miscellaneous
                             </option>
                         </select>
-                    </form>
-                </td>
-                <td>
-                    {{ entity.formatted_timecode|time:"H:i:s" }}
-                </td>
-                <td>
-                    {{ entity.segment }}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                    </td>
+                    <td>
+                        {{ entity.formatted_timecode|time:"H:i:s" }}
+                    </td>
+                    <td>
+                        {{ entity.segment }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="u-mt">
+            <button type="submit">Submit changes</button>
+        </div>
+    </form>
+
+    <form method="POST" action="{% url 'file_delete' file.id %}">
+        {% csrf_token %}
+        <p>
+            <button type="submit">Delete this upload</button>
+        </p>
+    </form>
+
 {% endblock main %}

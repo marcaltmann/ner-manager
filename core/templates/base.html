@@ -1,28 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-      <title>NER manager</title>
-      <style>
-          thead > tr {
-              background-color: lightblue;
-          }
-          tbody > tr:nth-child(even) {
-              background-color: lightgray;
-          }
-          tbody input {
-              background-color: transparent;
-              border: 1px dotted black;
-          }
-          .form--inline {
-              display: flex;
-          }
-      </style>
-  </head>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>NER manager</title>
+        <style>
+            {% include "styles.css" %}
+        </style>
+    </head>
 
-  <body>
-      {% block main %}
-      {% endblock main %}
-  </body>
+    <body>
+        {% block main %}
+        {% endblock main %}
+    </body>
 </html>
