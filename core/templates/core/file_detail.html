@@ -33,7 +33,7 @@
                 <td>
                     <form method="POST" action="{% url 'entity_delete' entity.id %}">
                         {% csrf_token %}
-                        <button type="submit" aria-label="Delete">x</button>
+                        <input type="checkbox" name="action" >
                     </form>
                 </td>
                 <td>
@@ -41,8 +41,20 @@
                           class="form form--inline">
                         {% csrf_token %}
                         <input name="name" aria-label="Name" value="{{ entity.name }}">
-                        <input name="label" aria-label="Label" value="{{ entity.label }}">
-                        <button type="submit" aria-label="Submit">S</button>
+                        <select name="label" aria-label="Label">
+                            <option value="PER"{% if entity.name == "PER" %} selected{% endif %}>
+                                Person
+                            </option>
+                            <option value="LOC"{% if entity.name == "LOC" %} selected{% endif %}>
+                                Location
+                            </option>
+                            <option value="ORG"{% if entity.name == "ORG" %} selected{% endif %}>
+                                Organisation
+                            </option>
+                            <option value="MISC"{% if entity.name == "MISC" %} selected{% endif %}>
+                                Miscellaneous
+                            </option>
+                        </select>
                     </form>
                 </td>
                 <td>
