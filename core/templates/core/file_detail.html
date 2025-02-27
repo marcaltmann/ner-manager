@@ -26,10 +26,10 @@
                   <td class="u-flex">
                      <input name="name" aria-label="Name" value="{{ entity.name }}">
                      <select name="label" aria-label="Label">
-                        <option value="PER"{% if entity.name == "PER" %} selected{% endif %}>Person</option>
-                        <option value="LOC"{% if entity.name == "LOC" %} selected{% endif %}>Location</option>
-                        <option value="ORG"{% if entity.name == "ORG" %} selected{% endif %}>Organisation</option>
-                        <option value="MISC"{% if entity.name == "MISC" %} selected{% endif %}>Miscellaneous</option>
+                        <option value="PER"{% if entity.label == "PER" %} selected{% endif %}>Person</option>
+                        <option value="LOC"{% if entity.label == "LOC" %} selected{% endif %}>Location</option>
+                        <option value="ORG"{% if entity.label == "ORG" %} selected{% endif %}>Organisation</option>
+                        <option value="MISC"{% if entity.label == "MISC" %} selected{% endif %}>Miscellaneous</option>
                      </select>
                   </td>
                   <td>{{ entity.formatted_timecode|time:"H:i:s" }}</td>
