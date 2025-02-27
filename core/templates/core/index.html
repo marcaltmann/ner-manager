@@ -1,16 +1,12 @@
 {% extends "base.html" %}
-
 {% block main %}
-<h1>NER manager</h1>
-
-<p>Welcome to NER manager.</p>
-<p>
-  <a href="{% url 'upload' %}">Upload JSON file</a>
-</p>
-<p>
-  <a href="{% url 'file_index' %}">Uploaded files</a>
-</p>
-<p>
-    {% lorem %}
-</p>
+   <h1>NER manager</h1>
+   <p>Welcome to NER manager.</p>
+   <p>
+      <a href="{% url 'upload' %}">Upload JSON file</a>
+   </p>
+   <p>
+      <a href="{% url 'file_index' %}">Uploaded files</a>
+   </p>
+   <p>{% lorem %}</p>
 {% endblock main %}

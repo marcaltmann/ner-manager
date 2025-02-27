@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-
 {% block main %}
-<h1>Upload JSON file</h1>
-
-<form method="post" action="{% url 'upload' %}" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Submit</button>
-</form>
-{% endblock %}
+   <h1>Upload JSON file</h1>
+   <form method="post"
+         action="{% url 'upload' %}"
+         enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Submit</button>
+   </form>
+{% endblock main %}

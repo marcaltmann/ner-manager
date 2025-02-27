@@ -1,72 +1,51 @@
 {% extends "base.html" %}
-
 {% block main %}
-    <h1>{{ file.name }}</h1>
-
-    <p>
-        {{ entities|length }} named entities
-        |
-        <a href="{% url 'file_download' file.id %}">
-            Export as JSON file
-        </a>
-    </p>
-
-    <form method="POST" action="">
-        {% csrf_token %}
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Actions</th>
-                    <th>Named entity</th>
-                    <th>Timecode</th>
-                    <th>Source</th>
-                </tr>
-            </thead>
-            <tbody>
+   <h1>{{ file.name }}</h1>
+   <p>
+      {{ entities|length }} named entities
+      |
+      <a href="{% url 'file_download' file.id %}">Export as JSON file</a>
+   </p>
+   <form method="post" action="">
+      {% csrf_token %}
+      <table>
+         <thead>
+            <tr>
+               <th>Actions</th>
+               <th>Named entity</th>
+               <th>Timecode</th>
+               <th>Source</th>
+            </tr>
+         </thead>
+         <tbody>
             {% for entity in entities %}
-                <tr>
-                    <td>
-                        <input type="checkbox" name="action" >
-                    </td>
-                    <td class="u-flex">
-                        <input name="name" aria-label="Name" value="{{ entity.name }}">
-                        <select name="label" aria-label="Label">
-                            <option value="PER"{% if entity.name == "PER" %} selected{% endif %}>
-                                Person
-                            </option>
-                            <option value="LOC"{% if entity.name == "LOC" %} selected{% endif %}>
-                                Location
-                            </option>
-                            <option value="ORG"{% if entity.name == "ORG" %} selected{% endif %}>
-                                Organisation
-                            </option>
-                            <option value="MISC"{% if entity.name == "MISC" %} selected{% endif %}>
-                                Miscellaneous
-                            </option>
-                        </select>
-                    </td>
-                    <td>
-                        {{ entity.formatted_timecode|time:"H:i:s" }}
-                    </td>
-                    <td>
-                        {{ entity.segment }}
-                    </td>
-                </tr>
+               <tr>
+                  <td>
+                     <input type="checkbox" name="action">
+                  </td>
+                  <td class="u-flex">
+                     <input name="name" aria-label="Name" value="{{ entity.name }}">
+                     <select name="label" aria-label="Label">
+                        <option value="PER"{% if entity.name == "PER" %} selected{% endif %}>Person</option>
+                        <option value="LOC"{% if entity.name == "LOC" %} selected{% endif %}>Location</option>
+                        <option value="ORG"{% if entity.name == "ORG" %} selected{% endif %}>Organisation</option>
+                        <option value="MISC"{% if entity.name == "MISC" %} selected{% endif %}>Miscellaneous</option>
+                     </select>
+                  </td>
+                  <td>{{ entity.formatted_timecode|time:"H:i:s" }}</td>
+                  <td>{{ entity.segment }}</td>
+               </tr>
             {% endfor %}
-            </tbody>
-        </table>
-
-        <div class="u-mt">
-            <button type="submit">Submit changes</button>
-        </div>
-    </form>
-
-    <form method="POST" action="{% url 'file_delete' file.id %}">
-        {% csrf_token %}
-        <p>
-            <button type="submit">Delete this upload</button>
-        </p>
-    </form>
-
+         </tbody>
+      </table>
+      <div class="u-mt">
+         <button type="submit">Submit changes</button>
+      </div>
+   </form>
+   <form method="post" action="{% url 'file_delete' file.id %}">
+      {% csrf_token %}
+      <p>
+         <button type="submit">Delete this upload</button>
+      </p>
+   </form>
 {% endblock main %}
