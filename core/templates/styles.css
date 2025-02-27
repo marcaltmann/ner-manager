@@ -1,14 +1,18 @@
-thead > tr {
-  background-color: lightblue;
+thead {
+  & > tr {
+    background-color: lightblue;
+  }
 }
 
-tbody > tr:nth-child(even) {
-  background-color: lightgray;
-}
+tbody {
+  & > tr:nth-child(even) {
+    background-color: lightgray;
+  }
 
-tbody input {
-  background-color: transparent;
-  border: 1px dotted black;
+  & input {
+    background-color: transparent;
+    border: 1px dotted black;
+  }
 }
 
 .form--inline {
