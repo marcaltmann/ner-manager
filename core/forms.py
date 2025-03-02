@@ -19,5 +19,5 @@ class InputFileForm(ModelForm):
 
 
 NamedEntityFormSet = inlineformset_factory(
-    InputFile, NamedEntity, fields=["label", "name", "timecode", "segment"]
+    InputFile, NamedEntity, fields=["label", "name", "timecode", "segment"], extra=0
 )
